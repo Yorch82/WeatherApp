@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.card {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.33);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+:root {
+  background-color: #111927;
+  background-image: 
+      radial-gradient(at 47% 33%, hsl(227.93, 85%, 44%) 0, transparent 59%), 
+      radial-gradient(at 82% 65%, hsl(218.00, 39%, 11%) 0, transparent 55%);
+}
