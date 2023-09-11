@@ -1,10 +1,16 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 import App from './App.jsx'
 import './index.css'
-import { StateContextProvider } from './context/index.jsx'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+import store from './app/store.js'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <StateContextProvider>
-    <App />
-  </StateContextProvider>
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render( 
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistStore(store)}>
+        <App />
+      </PersistGate>
+    </Provider>
 )

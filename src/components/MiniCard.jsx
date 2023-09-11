@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const MiniCard = ({ time, temp }) => {
+const MiniCard = ({ time, tempMin, tempMax, iconString }) => {
 
   return (
     <div className='card w-[10rem] h-[10rem] p-4 flex flex-col'>
@@ -9,9 +9,10 @@ const MiniCard = ({ time, temp }) => {
       </p>
       <hr />
       <div className='w-full flex justify-center items-center flex-1'>
-        <img src="/images/weather_icons/01d.png" alt="forecast not available" className='w-[4rem] h-[4rem]' />
+        <img src={iconString} alt="forecast not available" className='w-[4rem] h-[4rem]' />
       </div>
-      <p className='text-center font-bold'>{temp}&deg;C</p>
+      <p className='text-center font-bold'>Min {tempMin}&deg;C</p>
+      <p className='text-center font-bold'>Max {tempMax}&deg;C</p>
     </div>
   )
 }
