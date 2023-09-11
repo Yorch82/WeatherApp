@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useDate } from '../Utils/useDate'
+import { useDate } from '../utils/useDate'
 import '../index.css'
 
 const WeatherCard = ({
