@@ -1,28 +1,49 @@
-import {
-    persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER
-} from 'redux-persist'
-import { configureStore } from '@reduxjs/toolkit'
-import api from '../state/index'
-import storage from 'redux-persist/lib/storage'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from '../utils/persistStorage';
+import weatherReducer from '../features/weather/weatherSlice';
+import settingsReducer from '../features/settings/settingsSlice';
+import favoritesReducer from '../features/favorites/favoritesSlice';
 
-const persistConfig = { key: 'root', storage, version: 1 }
+const weatherPersistConfig = {
+  key: 'meteo-weather',
+  storage,
+  whitelist: ['location'],
+};
 
-const persistedReducer = persistReducer(persistConfig, api)
+const settingsPersistConfig = {
+  key: 'meteo-settings',
+  storage,
+};
 
-const store = configureStore({
-    reducer: persistedReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-        }
-      })
-})
+const favoritesPersistConfig = {
+  key: 'meteo-favorites',
+  storage,
+};
 
-export default store
+const rootReducer = combineReducers({
+  weather: persistReducer(weatherPersistConfig, weatherReducer),
+  settings: persistReducer(settingsPersistConfig, settingsReducer),
+  favorites: persistReducer(favoritesPersistConfig, favoritesReducer),
+});
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          'persist/FLUSH',
+          'persist/REHYDRATE',
+          'persist/PAUSE',
+          'persist/PERSIST',
+          'persist/PURGE',
+          'persist/REGISTER',
+        ],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
+
+export default store;
